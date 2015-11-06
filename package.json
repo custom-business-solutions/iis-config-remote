@@ -32,7 +32,8 @@
     "react-dom": "^0.14.2"
   },
   "scripts": {
-    "start": "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
+    "start-osx": "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
+    "start-win": ".\\node_modules\\electron-prebuilt\\dist\\electron.exe .",
     "watch": "./node_modules/.bin/webpack-dev-server",
     "electron-rebuild": "./node_modules/.bin/electron-rebuild"
   },
