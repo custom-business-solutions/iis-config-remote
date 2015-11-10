@@ -8,7 +8,8 @@ class ConfigForm extends React.Component {
         this.refs.port.value = '55500';
         var username = this.getUsername();
         this.refs.windowsUser.value = username;
-        this.refs.appHostConfigPath.value = `C:\\Users\\${username}\\My Documents\\IISExpress\\config\\applicationhost.config`;
+        this.refs.appHostConfigPath.value = `C:\\Users\\${username}\\My Documents\\IISExpress\\config\\applicationhost.bkp.config`;
+        this.editAppHostConfig();
     }
 
     getHostIpAddress() {
@@ -17,6 +18,10 @@ class ConfigForm extends React.Component {
 
     getUsername() {
         return ipc.sendSync('get-username');
+    }
+
+    editAppHostConfig() {
+        console.log(ipc.sendSync('edit-app-host-config'));
     }
 
     render() {
