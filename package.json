@@ -29,7 +29,8 @@
     "electron-prebuilt": "^0.34.2",
     "jquery": "^2.1.4",
     "react": "^0.14.2",
-    "react-dom": "^0.14.2"
+    "react-dom": "^0.14.2",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "start-osx": "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",

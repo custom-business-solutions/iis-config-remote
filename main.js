@@ -1,6 +1,6 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var ipc = require('ipc');
+var registerIpcListeners = require('./lib/ipcUtils').registerIpcListeners;
 
 require('crash-reporter').start();
 
@@ -15,10 +15,7 @@ app.on('ready', function() {
     mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
     mainWindow.openDevTools();
 
-    ipc.on('get-ip', function(event, arg) {
-        console.log(arg);
-        event.returnValue = 'sup';
-    });
+    registerIpcListeners();
 
     mainWindow.on('closed', function() {
         mainWindow = null;

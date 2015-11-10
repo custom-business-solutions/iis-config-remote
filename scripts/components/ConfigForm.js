@@ -11,8 +11,7 @@ class ConfigForm extends React.Component {
     }
 
     getHostIpAddress() {
-        console.log(ipc.sendSync('get-ip', 'wha..'));
-        return '10.11.223.112';
+        return ipc.sendSync('get-ip');
     }
 
     render() {
