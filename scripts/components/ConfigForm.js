@@ -6,12 +6,17 @@ class ConfigForm extends React.Component {
     componentDidMount() {
         this.refs.hostIp.value = this.getHostIpAddress();
         this.refs.port.value = '55500';
-        this.refs.windowsUser.value = 'ber21413';
-        this.refs.appHostConfigPath.value = 'C:\\Users\\ber21413\\My Documents\\IISExpress\\config\\applicationhost.config';
+        var username = this.getUsername();
+        this.refs.windowsUser.value = username;
+        this.refs.appHostConfigPath.value = `C:\\Users\\${username}\\My Documents\\IISExpress\\config\\applicationhost.config`;
     }
 
     getHostIpAddress() {
         return ipc.sendSync('get-ip');
+    }
+
+    getUsername() {
+        return ipc.sendSync('get-username');
     }
 
     render() {
