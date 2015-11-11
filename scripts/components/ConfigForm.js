@@ -2,61 +2,52 @@ var ipc = window.require('ipc');
 
 import React from "react";
 
-class ConfigForm extends React.Component {
-    componentDidMount() {
-        this.refs.hostIp.value = this.getHostIpAddress();
-        this.refs.port.value = '55500';
-        var username = this.getUsername();
-        this.refs.windowsUser.value = username;
-        this.refs.appHostConfigPath.value = `C:\\Users\\${username}\\My Documents\\IISExpress\\config\\applicationhost.bkp.config`;
-        this.editAppHostConfig();
-    }
+var ConfigForm = React.createClass({
 
-    getHostIpAddress() {
-        return ipc.sendSync('get-ip');
-    }
+    handleClick: function(e) {
+        e.preventDefault();
+        var data = {
+            newIp: this.hostIp.value,
+            port: this.port.value,
+            appConfig: this.appHostConfigPath.value
+        };
 
-    getUsername() {
-        return ipc.sendSync('get-username');
-    }
+        this.getOldIp(data.appConfig, data.port);
+    },
 
-    editAppHostConfig() {
-        console.log(ipc.sendSync('edit-app-host-config'));
-    }
+    getOldIp: function(configFilePath, port) {
+        console.log(ipc.sendSync('get-old-ip', configFilePath, port));
+    },
 
-    render() {
-        return <form className="form-horizontal">
-            <div className="form-group">
-                <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP</label>
-                <div className="col-sm-4">
-                    <input type="text" className="form-control" id="host-ip" placeholder="10.11.x.x" ref="hostIp" />
+    render: function() {
+        return (
+            <form className="form-horizontal">
+                <div className="form-group">
+                    <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP</label>
+                    <div className="col-sm-4">
+                        <input type="text" className="form-control" placeholder="10.11.x.x" defaultValue={this.props.configInitialValues.hostIp} ref={(ref) => this.hostIp = ref} />
+                    </div>
                 </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="port" className="col-sm-3 control-label">Port</label>
-                <div className="col-sm-4">
-                    <input type="text" className="form-control" id="port" placeholder="55500" ref="port" />
+                <div className="form-group">
+                    <label htmlFor="port" className="col-sm-3 control-label">Port</label>
+                    <div className="col-sm-4">
+                        <input type="text" className="form-control" id="port" placeholder="55500" defaultValue={this.props.configInitialValues.port} ref={(ref) => this.port = ref} />
+                    </div>
                 </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="windows-user" className="col-sm-3 control-label">Windows User</label>
-                <div className="col-sm-4">
-                    <input type="text" className="form-control" id="windows-user" ref="windowsUser" />
+                <div className="form-group">
+                    <label htmlFor="app-host-config-path" className="col-sm-3 control-label">applicationhost.config Path</label>
+                    <div className="col-sm-6">
+                        <input type="text" className="form-control" id="app-host-config-path" defaultValue={this.props.configInitialValues.appHostConfigPath} ref={(ref) => this.appHostConfigPath = ref} />
+                    </div>
                 </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="app-host-config-path" className="col-sm-3 control-label">applicationhost.config Path</label>
-                <div className="col-sm-6">
-                    <input type="text" className="form-control" id="app-host-config-path" ref="appHostConfigPath" />
+                <div className="form-group">
+                    <div className="col-sm-offset-3 col-sm-4">
+                        <button type="button" className="btn btn-primary" onClick={this.handleClick}>Bam!</button>
+                    </div>
                 </div>
-            </div>
-            <div className="form-group">
-                <div className="col-sm-offset-3 col-sm-4">
-                    <button className="btn btn-primary">Bam!</button>
-                </div>
-            </div>
-        </form>;
+            </form>
+        );
     }
-}
+});
 
 export default ConfigForm;
