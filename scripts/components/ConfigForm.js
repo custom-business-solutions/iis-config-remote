@@ -13,7 +13,17 @@ var ConfigForm = React.createClass({
         };
         data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
 
-        console.log(data);
+        if (this.updateAppConfig(data)) {
+            console.log(this.addUrlAclEntry(data));
+        }
+    },
+
+    updateAppConfig: function(data) {
+        return ipc.sendSync('update-apphost-config', data);
+    },
+
+    addUrlAclEntry: function(data) {
+        return ipc.sendSync('add-urlacl-entry', data);
     },
 
     render: function() {
