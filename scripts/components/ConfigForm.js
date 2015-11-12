@@ -14,7 +14,8 @@ var ConfigForm = React.createClass({
         data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
 
         if (this.updateAppConfig(data)) {
-            console.log(this.addUrlAclEntry(data));
+            this.addUrlAclEntry(data);
+            this.addFirewallEntry(data.port);
         }
     },
 
@@ -24,6 +25,10 @@ var ConfigForm = React.createClass({
 
     addUrlAclEntry: function(data) {
         return ipc.sendSync('add-urlacl-entry', data);
+    },
+
+    addFirewallEntry: function(port) {
+        return ipc.sendSync('add-firewall-entry', port);
     },
 
     render: function() {
