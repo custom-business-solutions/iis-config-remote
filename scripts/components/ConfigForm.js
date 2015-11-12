@@ -11,12 +11,9 @@ var ConfigForm = React.createClass({
             port: this.port.value,
             appConfig: this.appHostConfigPath.value
         };
+        data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
 
-        this.getOldIp(data.appConfig, data.port);
-    },
-
-    getOldIp: function(configFilePath, port) {
-        console.log(ipc.sendSync('get-old-ip', configFilePath, port));
+        console.log(data);
     },
 
     render: function() {
