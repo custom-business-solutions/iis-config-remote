@@ -11,22 +11,26 @@ var MainContainer = React.createClass({
         configInitialValues.port = '55500';
         configInitialValues.appHostConfigPath = 'C:\\temp\\individualshoppingapi\\.vs\\config\\applicationhost.bkp.config';
 
-        return { message: '', configInitialValues: configInitialValues};
+        return {
+            messageIp: '',
+            messageHost: '',
+            configInitialValues: configInitialValues
+        };
     },
 
     getHostIpAddress: function() {
         return ipc.sendSync('get-ip');
     },
 
-    handleMessageUpdate: function(message) {
-        this.setState({ message: message });
+    handleMessageUpdate: function(ip, port) {
+        this.setState({ messageIp: ip, messagePort: port });
     },
 
     render: function() {
         return (
             <div className="row">
                 <ConfigForm configInitialValues={this.state.configInitialValues} updateMessage={this.handleMessageUpdate}/>
-                <Message message={this.state.message} />
+                <Message messageIp={this.state.messageIp} messagePort={this.state.messagePort}/>
             </div>
         );
     }

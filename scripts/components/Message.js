@@ -2,12 +2,13 @@ import React from "react";
 
 var Message = React.createClass({
     render: function() {
-        let message = this.props.message;
+        let messageIp = this.props.messageIp;
+        let messagePort = this.props.messagePort;
         let markUp = <div></div>;
 
-        if (message) {
+        if (messageIp && messagePort) {
             markUp = <div className="alert alert-success" role="alert">
-                {message}
+                Ready to accept requests at <strong>http://{messageIp}:{messagePort}/</strong>
             </div>;
         }
 
