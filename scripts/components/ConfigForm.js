@@ -4,12 +4,20 @@ import React from "react";
 
 var ConfigForm = React.createClass({
 
+    getInitialState: function() {
+        return {
+            'host-ip': this.props.configInitialValues.hostIp,
+            'port': this.props.configInitialValues.port,
+            'app-host-config-path': this.props.configInitialValues.appHostConfigPath
+        };
+    },
+
     handleClick: function(e) {
         e.preventDefault();
         var data = {
-            newIp: this.hostIp.value,
-            port: this.port.value,
-            appConfig: this.appHostConfigPath.value
+            newIp: this.state['host-ip'],
+            port: this.state['port'],
+            appConfig: this.state['app-host-config-path']
         };
         data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
 
@@ -31,25 +39,31 @@ var ConfigForm = React.createClass({
         return ipc.sendSync('add-firewall-entry', port);
     },
 
+    handleChange: function(e) {
+        var nextState = {};
+        nextState[e.target.id] = e.target.value;
+        this.setState(nextState);
+    },
+
     render: function() {
         return (
             <form className="form-horizontal">
-                <div className="form-group">
+                <div className={this.state['host-ip'] === '' ? 'form-group has-error' : 'form-group'}>
                     <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP</label>
                     <div className="col-sm-4">
-                        <input type="text" className="form-control" placeholder="10.11.x.x" defaultValue={this.props.configInitialValues.hostIp} ref={(ref) => this.hostIp = ref} />
+                        <input type="text" className="form-control" id="host-ip" onChange={this.handleChange} placeholder="10.11.x.x" value={this.state['host-ip']} />
                     </div>
                 </div>
-                <div className="form-group">
+                <div className={this.state['port'] === '' ? 'form-group has-error' : 'form-group'}>
                     <label htmlFor="port" className="col-sm-3 control-label">Port</label>
                     <div className="col-sm-4">
-                        <input type="text" className="form-control" id="port" placeholder="55500" defaultValue={this.props.configInitialValues.port} ref={(ref) => this.port = ref} />
+                        <input type="text" className="form-control" id="port" onChange={this.handleChange} placeholder="55500" value={this.state['port']} />
                     </div>
                 </div>
-                <div className="form-group">
+                <div className={this.state['app-host-config-path'] === '' ? 'form-group has-error' : 'form-group'}>
                     <label htmlFor="app-host-config-path" className="col-sm-3 control-label">applicationhost.config Path</label>
                     <div className="col-sm-6">
-                        <input type="text" className="form-control" id="app-host-config-path" defaultValue={this.props.configInitialValues.appHostConfigPath} ref={(ref) => this.appHostConfigPath = ref} />
+                        <input type="text" className="form-control" id="app-host-config-path" onChange={this.handleChange} value={this.state['app-host-config-path']} />
                     </div>
                 </div>
                 <div className="form-group">
