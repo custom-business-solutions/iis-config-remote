@@ -1,6 +1,7 @@
 var ipc = window.require('ipc');
 
 import React from "react";
+import _ from "underscore";
 
 var ConfigForm = React.createClass({
 
@@ -46,6 +47,12 @@ var ConfigForm = React.createClass({
     },
 
     render: function() {
+        let buttonDisabled = _.some(this.state, function(item) {
+            return item === '';
+        }) ? 'disabled' : '';
+
+        let buttonClassNames = `btn btn-primary ${buttonDisabled}`;
+
         return (
             <form className="form-horizontal">
                 <div className={this.state['host-ip'] === '' ? 'form-group has-error' : 'form-group'}>
@@ -68,7 +75,7 @@ var ConfigForm = React.createClass({
                 </div>
                 <div className="form-group">
                     <div className="col-sm-offset-3 col-sm-4">
-                        <button type="button" className="btn btn-primary" onClick={this.handleClick}>Bam!</button>
+                        <a href="#" role="button" className={buttonClassNames} onClick={this.handleClick}>Bam!</a>
                     </div>
                 </div>
             </form>
