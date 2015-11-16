@@ -25,6 +25,8 @@ var ConfigForm = React.createClass({
         if (this.updateAppConfig(data)) {
             this.addUrlAclEntry(data);
             this.addFirewallEntry(data.port);
+
+            this.props.updateMessage(`Ready to accept requests at http://${data.newIp}:${data.port}/`);
         }
     },
 
