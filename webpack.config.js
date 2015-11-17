@@ -1,8 +1,18 @@
 var webpack = require('webpack');
 
+function getEntrySources(sources) {
+    if (process.env.NODE_ENV !== 'production') {
+        sources.push('webpack/hot/dev-server');
+    }
+
+    return sources;
+}
+
 module.exports = {
     entry: {
-        app: ['webpack/hot/dev-server', './scripts/entry.js'],
+        app: getEntrySources([
+            './scripts/entry.js'
+        ])
     },
 
     output: {

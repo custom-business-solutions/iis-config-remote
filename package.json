@@ -17,6 +17,7 @@
     "electron-packager": "^5.1.1",
     "electron-rebuild": "^1.0.2",
     "file-loader": "^0.8.4",
+    "jade": "^1.11.0",
     "node-libs-browser": "^0.5.3",
     "node-sass": "^3.4.1",
     "sass-loader": "^3.1.1",
@@ -33,10 +34,14 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "start-osx": "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
-    "start-win": ".\\node_modules\\electron-prebuilt\\dist\\electron.exe .",
-    "watch": "./node_modules/.bin/webpack-dev-server",
-    "electron-rebuild": "./node_modules/.bin/electron-rebuild"
+    "start:osx": "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
+    "start:win": ".\\node_modules\\electron-prebuilt\\dist\\electron.exe .",
+    "build:html:dev": ".\\node_modules\\.bin\\jade < .\\jade\\index-dev.jade > public\\index.html",
+    "watch": "npm run build:html:dev && .\\node_modules\\.bin\\webpack-dev-server",
+    "build:html:prod": ".\\node_modules\\.bin\\jade .\\jade\\index.jade --out public",
+    "build:prod": "set NODE_ENV=production && npm run build:html:prod && .\\node_modules\\.bin\\webpack -p",
+    "electron-rebuild": "./node_modules/.bin/electron-rebuild",
+    "pack:win": ".\\node_modules\\.bin\\electron-packager . IISConfigRemote --out=dist\\win --platform=win32 --arch=all --version=0.34.2 --asar=true"
   },
   "babel": {
     "presets": [
