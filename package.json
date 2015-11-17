@@ -41,7 +41,7 @@
     "build:html:prod": ".\\node_modules\\.bin\\jade .\\jade\\index.jade --out public",
     "build:prod": "set NODE_ENV=production && npm run build:html:prod && .\\node_modules\\.bin\\webpack -p",
     "electron-rebuild": "./node_modules/.bin/electron-rebuild",
-    "pack:win": ".\\node_modules\\.bin\\electron-packager . IISConfigRemote --out=dist\\win --platform=win32 --arch=all --version=0.34.2 --asar=true"
+    "pack:win": ".\\node_modules\\.bin\\electron-packager . IISConfigRemote --out=dist\\win --platform=win32 --arch=x64 --version=0.34.2 --asar=true --overwrite"
   },
   "babel": {
     "presets": [
