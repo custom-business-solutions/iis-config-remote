@@ -9,7 +9,7 @@ var MainContainer = React.createClass({
         var configInitialValues = {};
         configInitialValues.hostIp = this.getHostIpAddress();
         configInitialValues.port = '55500';
-        configInitialValues.appHostConfigPath = 'C:\\temp\\individualshoppingapi\\.vs\\config\\applicationhost.bkp.config';
+        configInitialValues.appHostConfigPath = 'C:\\stash\\individualshoppingapi\\.vs\\config\\applicationhost.config';
 
         return {
             messageIp: '',
