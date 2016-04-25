@@ -1,5 +1,3 @@
-require('bootstrap-sass!../bootstrap-sass.config.js')
-
 'use strict';
 
 import React from "react";

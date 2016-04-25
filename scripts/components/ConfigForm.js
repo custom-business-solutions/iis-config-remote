@@ -1,7 +1,7 @@
-var ipc = window.require('ipc');
+var ipcRenderer = window.require('electron').ipcRenderer;
 
 import React from "react";
-import _ from "underscore";
+import _ from "lodash";
 
 var ConfigForm = React.createClass({
 
@@ -20,7 +20,7 @@ var ConfigForm = React.createClass({
             port: this.state['port'],
             appConfig: this.state['app-host-config-path']
         };
-        data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
+        data.oldIp = ipcRenderer.sendSync('get-old-ip', data.appConfig, data.port);
 
         if (this.updateAppConfig(data)) {
             this.addUrlAclEntry(data);
@@ -31,15 +31,15 @@ var ConfigForm = React.createClass({
     },
 
     updateAppConfig: function(data) {
-        return ipc.sendSync('update-apphost-config', data);
+        return ipcRenderer.sendSync('update-apphost-config', data);
     },
 
     addUrlAclEntry: function(data) {
-        return ipc.sendSync('add-urlacl-entry', data);
+        return ipcRenderer.sendSync('add-urlacl-entry', data);
     },
 
     addFirewallEntry: function(port) {
-        return ipc.sendSync('add-firewall-entry', port);
+        return ipcRenderer.sendSync('add-firewall-entry', port);
     },
 
     handleChange: function(e) {
@@ -58,7 +58,7 @@ var ConfigForm = React.createClass({
         return (
             <form className="form-horizontal">
                 <div className={this.state['host-ip'] === '' ? 'form-group has-error' : 'form-group'}>
-                    <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP</label>
+                    <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP dawg</label>
                     <div className="col-sm-4">
                         <input type="text" className="form-control" id="host-ip" onChange={this.handleChange} placeholder="10.11.x.x" value={this.state['host-ip']} />
                     </div>
