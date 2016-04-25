@@ -1,41 +1,43 @@
-var ipcRenderer = window.require('electron').ipcRenderer;
+var ipcRenderer = window.require('electron').ipcRenderer
 
-import React from "react";
-import ConfigForm from "./ConfigForm";
-import Message from "./Message";
+import React, { Component } from 'react'
+import ConfigForm from './ConfigForm'
+import Message from './Message'
 
-import '../../sass/main.scss';
+import '../../sass/main.scss'
 
-var MainContainer = React.createClass({
-    getInitialState: function() {
-        var configInitialValues = {};
-        configInitialValues.hostIp = this.getHostIpAddress();
-        configInitialValues.port = '55500';
-        configInitialValues.appHostConfigPath = 'C:\\stash\\individualshoppingapi\\.vs\\config\\applicationhost.config';
+export default class MainContainer extends Component {
+  constructor (props) {
+    super(props)
 
-        return {
-            messageIp: '',
-            messageHost: '',
-            configInitialValues: configInitialValues
-        };
-    },
+    this.handleMessageUpdate = this.handleMessageUpdate.bind(this)
 
-    getHostIpAddress: function() {
-        return ipcRenderer.sendSync('get-ip');
-    },
+    var configInitialValues = {}
+    configInitialValues.hostIp = this.getHostIpAddress()
+    configInitialValues.port = '55500'
+    configInitialValues.appHostConfigPath = 'C:\\stash\\individualshoppingapi\\.vs\\config\\applicationhost.config'
 
-    handleMessageUpdate: function(ip, port) {
-        this.setState({ messageIp: ip, messagePort: port });
-    },
-
-    render: function() {
-        return (
-            <div className="row">
-                <ConfigForm configInitialValues={this.state.configInitialValues} updateMessage={this.handleMessageUpdate}/>
-                <Message messageIp={this.state.messageIp} messagePort={this.state.messagePort}/>
-            </div>
-        );
+    this.state = {
+      messageIp: '',
+      messageHost: '',
+      configInitialValues: configInitialValues
     }
-});
+  }
 
-export default MainContainer;
+  getHostIpAddress () {
+    return ipcRenderer.sendSync('get-ip')
+  }
+
+  handleMessageUpdate (ip, port) {
+    this.setState({ messageIp: ip, messagePort: port })
+  }
+
+  render () {
+    return (
+      <div className='row'>
+        <ConfigForm configInitialValues={this.state.configInitialValues} updateMessage={this.handleMessageUpdate}/>
+        <Message messageIp={this.state.messageIp} messagePort={this.state.messagePort}/>
+      </div>
+    )
+  }
+}

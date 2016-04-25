@@ -1,28 +1,28 @@
-var app = require('electron').app;
-var BrowserWindow = require('electron').BrowserWindow;
-var registerIpcListeners = require('./lib/ipcUtils').registerIpcListeners;
-var mb = require('menubar')({dir: 'public'});
+var app = require('electron').app
+var BrowserWindow = require('electron').BrowserWindow
+var registerIpcListeners = require('./lib/ipcUtils').registerIpcListeners
+// var mb = require('menubar')({dir: 'public'})
 
-require('crash-reporter').start();
+require('crash-reporter').start()
 
-// app.on('window-all-closed', function() {
-//     if (process.platform != 'darwin') {
-//         app.quit();
-//     }
-// });
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
-// app.on('ready', function() {
-//     mainWindow = new BrowserWindow({width: 1280, height: 800});
-//     mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
-//     mainWindow.openDevTools();
-//
-//     registerIpcListeners();
-//
-//     mainWindow.on('closed', function() {
-//         mainWindow = null;
-//     });
-// });
+app.on('ready', function () {
+  var mainWindow = new BrowserWindow({width: 1280, height: 800})
+  mainWindow.loadUrl('file://' + __dirname + '/public/index.html')
+  mainWindow.openDevTools()
 
-mb.on('ready', function () {
-    registerIpcListeners();
-});
+  registerIpcListeners()
+
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
+})
+
+// mb.on('ready', function () {
+//   registerIpcListeners()
+// })

@@ -1,8 +1,7 @@
-'use strict';
+'use strict'
 
-import React from "react";
-import ReactDOM from "react-dom";
-import MainContainer from "./components/MainContainer";
+import React from 'react'
+import { render } from 'react-dom'
+import MainContainer from './components/MainContainer'
 
-ReactDOM.render(<MainContainer />,
-    document.getElementById('content'));
+render(<MainContainer />, document.getElementById('content'))
