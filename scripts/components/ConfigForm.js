@@ -1,7 +1,7 @@
 var ipc = window.require('ipc');
 
 import React from "react";
-import _ from "underscore";
+import _ from "lodash";
 
 var ConfigForm = React.createClass({
 
