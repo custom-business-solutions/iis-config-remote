@@ -1,4 +1,4 @@
-var ipc = window.require('ipc');
+import { ipcRenderer } from 'electron';
 
 import React from "react";
 import ConfigForm from "./ConfigForm";
@@ -19,7 +19,7 @@ var MainContainer = React.createClass({
     },
 
     getHostIpAddress: function() {
-        return ipc.sendSync('get-ip');
+        return ipcRenderer.sendSync('get-ip');
     },
 
     handleMessageUpdate: function(ip, port) {

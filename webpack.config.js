@@ -11,7 +11,8 @@ function getEntrySources(sources) {
 module.exports = {
     entry: {
         app: getEntrySources([
-            './scripts/entry.js'
+            './scripts/entry.js',
+            'bootstrap-loader'
         ])
     },
 
@@ -21,6 +22,10 @@ module.exports = {
         publicPath: 'http://localhost:8080/built/'
     },
 
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    }
+
     devServer: {
         contentBase: './public',
         publicPath: 'http://localhost:8080/built/'
@@ -29,7 +34,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
             },
@@ -42,19 +47,16 @@ module.exports = {
                 loader: 'style-loader!css-loader!sass-loader'
             },
 
-            { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
+            { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' },
 
-            { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-            { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,  loader: "url?limit=10000&mimetype=application/font-woff" },
-            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
-            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
-            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" }
+            { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
+            { test: /\.(ttf|eot)$/, loader: 'file' }
         ]
     },
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
+        new webpack.IgnorePlugin(new RegExp("^(fs)$")),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"

@@ -1,4 +1,4 @@
-var ipc = window.require('ipc');
+import { ipcRenderer } from 'electron';
 
 import React from "react";
 import _ from "lodash";
@@ -20,7 +20,7 @@ var ConfigForm = React.createClass({
             port: this.state['port'],
             appConfig: this.state['app-host-config-path']
         };
-        data.oldIp = ipc.sendSync('get-old-ip', data.appConfig, data.port);
+        data.oldIp = ipcRenderer.sendSync('get-old-ip', data.appConfig, data.port);
 
         if (this.updateAppConfig(data)) {
             this.addUrlAclEntry(data);
@@ -31,15 +31,15 @@ var ConfigForm = React.createClass({
     },
 
     updateAppConfig: function(data) {
-        return ipc.sendSync('update-apphost-config', data);
+        return ipcRenderer.sendSync('update-apphost-config', data);
     },
 
     addUrlAclEntry: function(data) {
-        return ipc.sendSync('add-urlacl-entry', data);
+        return ipcRenderer.sendSync('add-urlacl-entry', data);
     },
 
     addFirewallEntry: function(port) {
-        return ipc.sendSync('add-firewall-entry', port);
+        return ipcRenderer.sendSync('add-firewall-entry', port);
     },
 
     handleChange: function(e) {
