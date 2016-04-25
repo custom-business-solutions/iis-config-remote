@@ -11,8 +11,8 @@ function getEntrySources(sources) {
 module.exports = {
     entry: {
         app: getEntrySources([
-            './scripts/entry.js',
-            'bootstrap-loader'
+            'bootstrap-loader',
+            './scripts/entry.js'
         ])
     },
 
@@ -24,7 +24,7 @@ module.exports = {
 
     resolve: {
         extensions: ['', '.js', '.jsx']
-    }
+    },
 
     devServer: {
         contentBase: './public',
@@ -56,7 +56,7 @@ module.exports = {
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.IgnorePlugin(new RegExp("^(fs)$")),
+        new webpack.IgnorePlugin(new RegExp("^(fs|electron)$")),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"

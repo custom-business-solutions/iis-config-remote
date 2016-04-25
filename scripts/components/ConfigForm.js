@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+var ipcRenderer = window.require('electron').ipcRenderer;
 
 import React from "react";
 import _ from "lodash";
@@ -58,7 +58,7 @@ var ConfigForm = React.createClass({
         return (
             <form className="form-horizontal">
                 <div className={this.state['host-ip'] === '' ? 'form-group has-error' : 'form-group'}>
-                    <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP</label>
+                    <label htmlFor="host-ip" className="col-sm-3 control-label">Host IP dawg</label>
                     <div className="col-sm-4">
                         <input type="text" className="form-control" id="host-ip" onChange={this.handleChange} placeholder="10.11.x.x" value={this.state['host-ip']} />
                     </div>

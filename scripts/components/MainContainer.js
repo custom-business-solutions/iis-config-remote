@@ -1,8 +1,10 @@
-import { ipcRenderer } from 'electron';
+var ipcRenderer = window.require('electron').ipcRenderer;
 
 import React from "react";
 import ConfigForm from "./ConfigForm";
 import Message from "./Message";
+
+import '../../sass/main.scss';
 
 var MainContainer = React.createClass({
     getInitialState: function() {

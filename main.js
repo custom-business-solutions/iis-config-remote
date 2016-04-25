@@ -4,6 +4,8 @@ var registerIpcListeners = require('./lib/ipcUtils').registerIpcListeners;
 
 require('crash-reporter').start();
 
+process.noDeprecation = true;
+
 app.on('window-all-closed', function() {
     if (process.platform != 'darwin') {
         app.quit();
