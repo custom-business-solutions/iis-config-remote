@@ -1,11 +1,18 @@
 // var ipcRenderer = window.require('electron').ipcRenderer
 
-import React, { Component } from 'react'
+import React from 'react'
+import Header from './Header'
+import ConfigContainer from './ConfigContainer'
 
 import '../../sass/main.scss'
 
-export default class MainContainer extends Component {
-  render () {
-    return <div></div>
-  }
+const MainContainer = () => {
+  return (
+    <div>
+      <Header />
+      <ConfigContainer />
+    </div>
+  )
 }
+
+export default MainContainer
