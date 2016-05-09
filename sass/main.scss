@@ -2,5 +2,9 @@ $body-bg: #ddd;
 $myDiv-fg: #333;
 
 body {
-    background-color: $body-bg;
+  background-color: $body-bg;
+}
+
+.form-group > * {
+  margin: 0 0 0 5px;
 }

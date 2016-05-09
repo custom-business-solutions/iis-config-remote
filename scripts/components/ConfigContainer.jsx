@@ -10,27 +10,38 @@ export default class ConfigContainer extends Component {
     super(props)
 
     this.state = {
-      'firewall-port': ''
+      'firewall-rule-added': false
     }
   }
 
   componentDidMount () {
-    ipcRenderer.on('add-firewall-rule-reply', function (event, port) {
+    ipcRenderer.on('add-firewall-rule-reply', function (event, message) {
+      const ruleAdded = message === 'Success'
       this.setState({
-        'firewall-port': port
+        'firewall-rule-added': ruleAdded
+      })
+    }.bind(this))
+
+    ipcRenderer.on('delete-firewall-rule-reply', function (event, message) {
+      const ruleDeleted = message === 'Success'
+      this.setState({
+        'firewall-rule-added': !ruleDeleted
       })
     }.bind(this))
   }
 
   addFirewallRule (port) {
-    // console.log(port)
     ipcRenderer.send('add-firewall-rule', port)
+  }
+
+  deleteFirewallRule (port) {
+    ipcRenderer.send('delete-firewall-rule', port)
   }
 
   render () {
     return (
       <div className='container-fluid'>
-        <FirewallRule addFirewallRule={this.addFirewallRule} port={this.state['firewall-port']} />
+        <FirewallRule addFirewallRule={this.addFirewallRule} deleteFirewallRule={this.deleteFirewallRule} ruleAdded={this.state['firewall-rule-added']} />
         <UrlAcl />
         <ApplicationBinding />
       </div>
