@@ -19,7 +19,7 @@
     "bootstrap-loader": "^1.0.10",
     "bootstrap-sass": "^3.3.6",
     "css-loader": "^0.23.1",
-    "electron-builder": "^3.17.1",
+    "electron-builder": "^3.19.0",
     "electron-packager": "^7.0.1",
     "electron-rebuild": "^1.1.3",
     "file-loader": "^0.8.5",
@@ -50,7 +50,7 @@
     "build:html:prod": "jade ./jade/index.jade --out public",
     "build:prod": "npm run clean && set NODE_ENV=production && npm run build:html:prod && webpack -p",
     "build:dev": "npm run build:html:dev && webpack-dev-server",
-    "start": "electron .",
+    "start": "electron . --enable-logging",
     "electron-pack": "npm run build:prod && electron-packager . IISConfigRemote --out=dist\\win --platform=win32 --arch=x64 --version=0.34.2 --asar=true --overwrite",
     "electron-build": "electron-builder dist\\win\\IISConfigRemote-win32-x64 --platform=win --out=dist\\win --config=packager.json",
     "electron-rebuild": "electron-rebuild"

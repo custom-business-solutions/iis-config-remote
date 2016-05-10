@@ -9,17 +9,17 @@ export default class FirewallRule extends Component {
     this.handleDelete = this.handleDelete.bind(this)
 
     this.state = {
-      'port': {
-        'value': '',
-        'error': '',
-        'touched': false
+      port: {
+        value: '',
+        error: '',
+        touched: false
       }
     }
   }
 
   handleChange (e) {
     this.setState({
-      'port': { ...this.state.port, 'value': e.target.value }
+      port: { ...this.state.port, value: e.target.value }
     })
   }
 
@@ -36,9 +36,9 @@ export default class FirewallRule extends Component {
 
   validate (portValue) {
     var newState = {
-      'value': portValue,
-      'touched': true,
-      'error': ''
+      value: portValue,
+      touched: true,
+      error: ''
     }
 
     const regex = /^\d+$/
@@ -50,7 +50,7 @@ export default class FirewallRule extends Component {
     }
 
     this.setState({
-      'port': newState
+      port: newState
     })
   }
 
@@ -68,15 +68,14 @@ export default class FirewallRule extends Component {
         <div className='col-md-12'>
           <div className='panel panel-default'>
             <div className='panel-body'>
-              <div className='form-inline'>
-                <div className='form-group'>
-                  <label htmlFor='port' className='control-label'>Port</label>
-                  <input type='text' className='form-control' id='port' placeholder='55500' value={this.state.port.value} onChange={this.handleChange}
-                    readOnly={this.props.ruleAdded} />
+              <div className='form-group'>
+                <label htmlFor='port' className='control-label col-md-12'>Port</label>
+                <div className='col-md-4'>
+                  <input type='text' className='form-control' id='port' placeholder='55500' value={this.state.port.value} onChange={this.handleChange} readOnly={this.props.ruleAdded}/>
                 </div>
-                <div className='form-group'>
-                  {this.renderButton(this.props.ruleAdded)}
-                </div>
+              </div>
+              <div className='form-group'>
+                {this.renderButton(this.props.ruleAdded)}
               </div>
             </div>
           </div>

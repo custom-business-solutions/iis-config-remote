@@ -10,22 +10,36 @@ export default class ConfigContainer extends Component {
     super(props)
 
     this.state = {
-      'firewall-rule-added': false
+      port: '',
+      firewallRuleAdded: false,
+      ipAddresses: []
     }
   }
 
+  componentWillMount () {
+    ipcRenderer.send('get-ip-addresses')
+  }
+
   componentDidMount () {
-    ipcRenderer.on('add-firewall-rule-reply', function (event, message) {
+    ipcRenderer.on('add-firewall-rule-reply', function (event, message, port) {
       const ruleAdded = message === 'Success'
       this.setState({
-        'firewall-rule-added': ruleAdded
+        port: port,
+        firewallRuleAdded: ruleAdded
       })
     }.bind(this))
 
     ipcRenderer.on('delete-firewall-rule-reply', function (event, message) {
       const ruleDeleted = message === 'Success'
       this.setState({
-        'firewall-rule-added': !ruleDeleted
+        port: '',
+        firewallRuleAdded: !ruleDeleted
+      })
+    }.bind(this))
+
+    ipcRenderer.on('get-ip-addresses-reply', function (event, ipAddresses) {
+      this.setState({
+        ipAddresses: ipAddresses
       })
     }.bind(this))
   }
@@ -41,8 +55,8 @@ export default class ConfigContainer extends Component {
   render () {
     return (
       <div className='container-fluid'>
-        <FirewallRule addFirewallRule={this.addFirewallRule} deleteFirewallRule={this.deleteFirewallRule} ruleAdded={this.state['firewall-rule-added']} />
-        <UrlAcl />
+        <FirewallRule addFirewallRule={this.addFirewallRule} deleteFirewallRule={this.deleteFirewallRule} ruleAdded={this.state.firewallRuleAdded} />
+        <UrlAcl port={this.state.port} ipAddresses={this.state.ipAddresses} />
         <ApplicationBinding />
       </div>
     )
