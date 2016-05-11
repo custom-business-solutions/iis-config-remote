@@ -1,6 +1,13 @@
-$body-bg: #ddd;
-$myDiv-fg: #333;
+$color-white: #fdfffc;
+$color-gray: #323331;
+$body-bg: $color-gray;
+$header-bg: $color-white;
 
 body {
   background-color: $body-bg;
+}
+
+.jumbotron {
+  background-color: $header-bg;
+  padding: 0;
 }

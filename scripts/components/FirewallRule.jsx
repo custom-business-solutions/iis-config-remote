@@ -25,7 +25,6 @@ export default class FirewallRule extends Component {
 
   handleAdd (e) {
     e.preventDefault()
-
     this.props.addFirewallRule(this.state.port.value)
   }
 
