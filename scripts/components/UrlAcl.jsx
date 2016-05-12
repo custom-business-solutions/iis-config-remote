@@ -5,7 +5,7 @@ export default class UrlAcl extends Component {
     super(props)
 
     this.handleChangeIp = this.handleChangeIp.bind(this)
-    this.handleAddIp = this.handleAddIp.bind(this)
+    this.renderExistingRules = this.renderExistingRules.bind(this)
 
     this.state = {
       chosenIpAddress: ''
@@ -18,13 +18,24 @@ export default class UrlAcl extends Component {
     })
   }
 
-  handleAddIp (e) {
-    e.preventDefault()
-    this.props.addURLRule(this.state.chosenIpAddress)
+  renderExistingRules (existingURLRules) {
+    return (
+      <table className='table'>
+        <thead>
+          <tr>
+            <th>Existing URLs</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {existingURLRules.map((url) => <tr key={url}><td>{url}</td><td><a type='button' className='btn btn-danger' onClick={this.props.deleteURLRule.bind(this, url)}>Delete</a></td></tr>)}
+        </tbody>
+      </table>
+    )
   }
 
   render () {
-    const { port, ipAddresses } = this.props
+    const { port, ipAddresses, existingURLRules, addURLRule } = this.props
 
     return (
       <div className='row'>
@@ -40,10 +51,11 @@ export default class UrlAcl extends Component {
                       {ipAddresses.map((ip) => <option key={ip.ipAddress} value={ip.ipAddress}>{`${ip.name} - ${ip.ipAddress}`}</option>)}
                     </select>
                   </div>
-                  <a type='button' className='btn btn-primary' onClick={this.handleAddIp}>Allow connections to this IP</a>
+                  <a type='button' className='btn btn-primary' onClick={addURLRule.bind(this, this.state.chosenIpAddress)}>Allow connections to this IP</a>
                 </div>
               </fieldset>
             </div>
+            {existingURLRules.length > 0 ? this.renderExistingRules(existingURLRules) : null}
           </div>
         </div>
       </div>
@@ -55,5 +67,7 @@ UrlAcl.propTypes = {
   port: PropTypes.string.isRequired,
   ipAddresses: PropTypes.array.isRequired,
   addURLRule: PropTypes.func.isRequired,
-  ruleAdded: PropTypes.bool.isRequired
+  ruleAdded: PropTypes.bool.isRequired,
+  existingURLRules: PropTypes.array.isRequired,
+  deleteURLRule: PropTypes.func.isRequired
 }

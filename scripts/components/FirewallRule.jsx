@@ -5,8 +5,7 @@ export default class FirewallRule extends Component {
     super(props)
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
+    this.renderButton = this.renderButton.bind(this)
 
     this.state = {
       port: {
@@ -21,16 +20,6 @@ export default class FirewallRule extends Component {
     this.setState({
       port: { ...this.state.port, value: e.target.value }
     })
-  }
-
-  handleAdd (e) {
-    e.preventDefault()
-    this.props.addFirewallRule(this.state.port.value)
-  }
-
-  handleDelete (e) {
-    e.preventDefault()
-    this.props.deleteFirewallRule(this.state.port.value)
   }
 
   validate (portValue) {
@@ -54,10 +43,11 @@ export default class FirewallRule extends Component {
   }
 
   renderButton (ruleAdded) {
+    const { addFirewallRule, deleteFirewallRule } = this.props
     if (ruleAdded) {
-      return (<a type='button' className='btn btn-danger' onClick={this.handleDelete}>Delete Firewall Rule</a>)
+      return (<a type='button' className='btn btn-danger' onClick={deleteFirewallRule.bind(this, this.state.port.value)}>Delete Firewall Rule</a>)
     } else {
-      return (<a type='button' className='btn btn-primary' onClick={this.handleAdd}>Add Firewall Rule</a>)
+      return (<a type='button' className='btn btn-primary' onClick={addFirewallRule.bind(this, this.state.port.value)}>Add Firewall Rule</a>)
     }
   }
 
