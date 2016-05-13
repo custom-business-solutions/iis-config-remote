@@ -22,26 +22,6 @@ export default class FirewallRule extends Component {
     })
   }
 
-  validate (portValue) {
-    var newState = {
-      value: portValue,
-      touched: true,
-      error: ''
-    }
-
-    const regex = /^\d+$/
-    if (!regex.test(portValue)) {
-      newState.error = 'Port should include numbers only'
-    }
-    if (portValue === '') {
-      newState.error = 'Required'
-    }
-
-    this.setState({
-      port: newState
-    })
-  }
-
   renderButton (ruleAdded) {
     const { addFirewallRule, deleteFirewallRule } = this.props
     if (ruleAdded) {
