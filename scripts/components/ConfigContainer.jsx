@@ -11,6 +11,7 @@ export default class ConfigContainer extends Component {
     super(props)
 
     this.addURLRule = this.addURLRule.bind(this)
+    this.bindApplicationToIp = this.bindApplicationToIp.bind(this)
 
     this.state = {
       port: '',
@@ -18,7 +19,8 @@ export default class ConfigContainer extends Component {
       ipAddresses: [],
       chosenIpAddress: '',
       URLRuleAdded: false,
-      existingURLRules: []
+      existingURLRules: [],
+      appBoundInAppHost: false
     }
   }
 
@@ -86,6 +88,14 @@ export default class ConfigContainer extends Component {
         })
       }
     }.bind(this))
+
+    ipcRenderer.on('bind-application-to-ip-reply', function (event, message) {
+      if (message === 'Success') {
+        this.setState({
+          appBoundInAppHost: true
+        })
+      }
+    }.bind(this))
   }
 
   addFirewallRule (port) {
@@ -104,18 +114,18 @@ export default class ConfigContainer extends Component {
     ipcRenderer.send('delete-url-rule', url)
   }
 
-  bindApplicationToIp () {
-    ipcRenderer.send('bind-application-to-ip', this.state.port, this.state.chosenIpAddress)
+  bindApplicationToIp (appHostPath) {
+    ipcRenderer.send('bind-application-to-ip', appHostPath, this.state.port, this.state.chosenIpAddress)
   }
 
   render () {
-    const { firewallRuleAdded, port, ipAddresses, URLRuleAdded, existingURLRules, chosenIpAddress } = this.state
+    const { firewallRuleAdded, port, ipAddresses, URLRuleAdded, existingURLRules, chosenIpAddress, appBoundInAppHost } = this.state
     return (
       <div className='container-fluid'>
         <FirewallRule addFirewallRule={this.addFirewallRule} deleteFirewallRule={this.deleteFirewallRule} ruleAdded={firewallRuleAdded} />
         <UrlAcl port={port} ipAddresses={ipAddresses} addURLRule={this.addURLRule} ruleAdded={URLRuleAdded}
           existingURLRules={existingURLRules} deleteURLRule={this.deleteURLRule} />
-        <ApplicationBinding port={port} chosenIpAddress={chosenIpAddress} bindApplicationToIp={this.bindApplicationToIp}/>
+        <ApplicationBinding appBoundInAppHost={appBoundInAppHost} port={port} chosenIpAddress={chosenIpAddress} bindApplicationToIp={this.bindApplicationToIp}/>
       </div>
     )
   }
